@@ -43,7 +43,7 @@ const addProduct=(adminProduct,mainImage,nextImage)=>{
 const getAllProducts = ()=>{
     return new Promise(async(resolve,reject)=>{
 
-        let products=await Product.find().lean().populate('Categoryname')
+        let products=await Product.find().populate('Categoryname').lean()
         resolve(products)
         
     })

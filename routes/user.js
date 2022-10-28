@@ -18,23 +18,36 @@ const verifyLogin = (req, res, next) => {
 };
 
 /* GET home page. */ 
+// router.get("/", async function (req, res, next) {
+//   let user = req.session.user;
+//   adminController.getAllProducts().then((products) => { 
+//     adminController.getCategory().then((catg) => {  
+//         adminController.getCategoryDropdown().then((categories) => {
+//         res.render("index", {
+//           products,
+//           user,     
+//           catg,
+//           categories,
+//         });
+//       });
+//     }); 
+//     console.log(user); 
+//   });
+// }); 
+
 router.get("/", async function (req, res, next) {
   let user = req.session.user;
-  adminController.getAllProducts().then((products) => { 
-    adminController.getCategory().then((catg) => {  
-        adminController.getCategoryDropdown().then((categories) => {
+  adminController.getAllProducts().then((products) => {   
+    console.log(products); 
         res.render("index", {
           products,
-          user,     
-          catg,
-          categories,
+          // user,     
+          // catg,
+          // categories,
         });
-      });
-    }); 
-    console.log(user); 
+    
   });
 }); 
-
 
 router.get("/product-categories/:id", async (req, res) => {
   let user = req.session.user;

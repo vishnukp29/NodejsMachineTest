@@ -8,7 +8,7 @@ const fileUpload=require('express-fileupload')
 const bodyParser=require('body-parser')
 const session=require('express-session') 
 const multer=require('multer')
-require('dotenv').config({debug:true})
+// require('dotenv').config({debug:true}) 
 
 const  config=require('./Config/configMongo')
 const productSchema=require('./Model/productSchema')
