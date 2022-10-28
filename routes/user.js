@@ -18,43 +18,41 @@ const verifyLogin = (req, res, next) => {
 };
 
 /* GET home page. */ 
-// router.get("/", async function (req, res, next) {
-//   let user = req.session.user;
-//   adminController.getAllProducts().then((products) => { 
-//     adminController.getCategory().then((catg) => {  
-//         adminController.getCategoryDropdown().then((categories) => {
-//         res.render("index", {
-//           products,
-//           user,     
-//           catg,
-//           categories,
-//         });
-//       });
-//     }); 
-//     console.log(user); 
-//   });
-// }); 
-
 router.get("/", async function (req, res, next) {
   let user = req.session.user;
-  adminController.getAllProducts().then((products) => {   
-    console.log(products); 
+  adminController.getAllProducts().then((products) => { 
+    adminController.getCategory().then((catg) => {  
+        adminController.getCategoryDropdown().then((categories) => {
         res.render("index", {
           products,
-          // user,     
-          // catg,
-          // categories,
+          user,     
+          catg,
+          categories,
         });
-    
+      });
+    }); 
+    console.log(user); 
   });
 }); 
 
+// router.get("/", async function (req, res, next) {
+//   let user = req.session.user;
+//   adminController.getAllProducts().then((products) => {   
+//     console.log(products); 
+//         res.render("index", {
+//           products
+//         });
+    
+//   });
+// }); 
+
 router.get("/product-categories/:id", async (req, res) => {
   let user = req.session.user;
+  let categories = await adminController.getCategoryDropdown();
   let productCategories = await adminController.getCategoryProducts(
     req.params.id
   );
-  res.render("user/product-categories", { user, productCategories });
+  res.render("user/product-categories", { user, productCategories,categories });
 });
 
 /*SignUp Page*/
@@ -108,12 +106,13 @@ router.get("/logout", (req, res) => {
 /* View Product Details */
 router.get("/view-product-details/:id", async (req, res) => {
   let user = req.session.user;
+  let categories = await adminController.getCategoryDropdown();
   if (req.session.user) {
     let product_details = await adminController.getProductDetails(req.params.id);
-    res.render("user/view-product-details", { product_details, user });
+    res.render("user/view-product-details", { product_details, user,categories });
   } else {
     let product_details = await adminController.getProductDetails(req.params.id);
-    res.render("user/view-product-details", { product_details });
+    res.render("user/view-product-details", { product_details,categories });
   }
 });
 
